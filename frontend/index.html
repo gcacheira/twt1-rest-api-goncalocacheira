@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestão de Alunos</title>
+</head>
+<body>
+  <h1>Lista de Alunos</h1>
+  <ul id="lista-alunos"></ul>
+
+  <form id="alunoForm">
+    <input type="text" name="nome" placeholder="Nome" required>
+    <input type="text" name="apelido" placeholder="Apelido" required>
+    <input type="text" name="curso" placeholder="Curso" required>
+    <input type="number" name="anoCurricular" placeholder="Ano" required>
+    <button type="submit">Adicionar Aluno</button>
+  </form>
+
+  <script>
+    const API = 'http://localhost:3002/alunos';
+
+    async function carregarAlunos() {
+      const resposta = await fetch(API);
+      const alunos = await resposta.json();
+      const lista = document.getElementById("lista-alunos");
+      lista.innerHTML = "";
+      alunos.forEach(aluno => {
+        const li = document.createElement("li");
+        li.textContent = `${aluno.nome} ${aluno.apelido} - ${aluno.curso} (Ano ${aluno.anoCurricular})`;
+        lista.appendChild(li);
+      });
+    }
+
+    document.getElementById("alunoForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const form = e.target;
+      const dados = {
+        nome: form.nome.value,
+        apelido: form.apelido.value,
+        curso: form.curso.value,
+        anoCurricular: parseInt(form.anoCurricular.value)
+      };
+
+      await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados)
+      });
+
+      form.reset();
+      carregarAlunos();
+    });
+
+    carregarAlunos();
+  </script>
+</body>
+</html>
