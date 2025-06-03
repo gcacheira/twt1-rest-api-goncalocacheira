@@ -15,9 +15,6 @@
 /mock-data → Base de dados inicial (bd.json)
 /tests → Coleção de testes Postman
 
-yaml
-Copiar
-Editar
 
 ---
 
