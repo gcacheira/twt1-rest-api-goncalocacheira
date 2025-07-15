@@ -50,7 +50,7 @@ npm run server  # http://localhost:3001/alunos
 # Backend real
 cd backend
 npm install
-node index.js   # http://localhost:3002/alunos
+npm start   # http://localhost:3002/alunos
 
 # Frontend
 Abre frontend/index.html com Live Server ou navegador
